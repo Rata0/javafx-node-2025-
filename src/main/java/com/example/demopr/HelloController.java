@@ -25,7 +25,6 @@ public class HelloController {
         newHBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 20;");
 
         VBox leftColumn = new VBox();
-        leftColumn.setSpacing(5);
         Label labelType = new Label("ТИП | ...");
         Label labelDirector = new Label("Директор ...");
         Label labelPhone = new Label("Телефон ...");

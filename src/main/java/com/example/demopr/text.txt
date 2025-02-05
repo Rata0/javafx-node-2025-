@@ -1,0 +1,59 @@
+CREATE TABLE partners
+(
+    id serial,
+    type text,
+    name text UNIQUE,
+    director text,
+    email text,
+    phone text,
+    address text,
+    inn text,
+    rating integer,
+    PRIMARY KEY (id)
+);
+
+\COPY partners (type, name, director, email, phone, address, inn, rating) FROM '/home/alexander/Downloads/Partners_import.csv' DELIMITER ';' CSV HEADER;
+
+CREATE TABLE products
+(
+    id serial,
+    product_type text,
+    name text NOT NULL,
+    article text NOT NULL,
+    min_price_for_partner decimal NOT NULL,
+    currency_type text NOT NULL,
+    PRIMARY KEY (id)
+);
+
+\COPY products (product_type, name, article, min_price_for_partner) FROM '/home/alexander/Downloads/Products_import.csv' DELIMITER ';' CSV HEADER;
+
+CREATE TABLE sales
+(
+    id serial NOT NULL,
+    product_id text REFERENCES products(name) NOT NULL,
+    partner_id text REFERENCES partners(name) NOT NULL,
+    production_quantity bigint,
+    date_of_sale DATE,
+    PRIMARY KEY (id)
+);
+
+\COPY sales (product_id, partner_id, production_quantity, date_of_sale) FROM '/home/alexander/Downloads/Partner_products_import.csv' DELIMITER ';' CSV HEADER;
+
+CREATE TABLE product_type
+(
+    id serial PRIMARY KEY,
+    product_type VARCHAR(255) NOT NULL,
+    coefficient NUMERIC(5, 2) NOT NULL
+);
+
+
+\COPY product_type (product_type, coefficient) FROM '/home/alexander/Downloads/Product_type_import.csv' DELIMITER ';' CSV HEADER;
+
+CREATE TABLE material_type
+(
+    id serial PRIMARY KEY,
+    material_type VARCHAR(255) NOT NULL,
+    defect_percentage VARCHAR(10) NOT NULL
+);
+
+\COPY material_type (material_type, defect_percentage) FROM '/home/alexander/Downloads/Material_type_import.csv' DELIMITER ';' CSV HEADER;
